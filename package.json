@@ -13,7 +13,7 @@
   "main": "dist/simplebar.js",
   "homepage": "https://grsmto.github.io/simplebar/",
   "bugs": "https://github.com/grsmto/simplebar/issues",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "scripts": {
     "start": "webpack-dev-server --inline",
     "start:prod": "NODE_ENV=production webpack-dev-server",
@@ -35,21 +35,21 @@
     "scrollbarwidth": "^0.1.0"
   },
   "devDependencies": {
-    "autoprefixer": "^6.5.0",
+    "autoprefixer": "^7.1.1",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.5",
+    "babel-loader": "^7.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-latest": "^6.16.0",
-    "css-loader": "^0.25.0",
-    "eslint": "^3.5.0",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "normalize.css": "^6.0.0",
-    "postcss-loader": "^0.13.0",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.0.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "normalize.css": "^7.0.0",
+    "postcss-loader": "^2.0.6",
     "resize-observer-polyfill": "^1.4.1",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.1"
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }

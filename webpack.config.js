@@ -1,7 +1,7 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const autoprefixer = require('autoprefixer');
 
@@ -14,41 +14,54 @@ console.log(`  NODE_ENV: ${process.env.NODE_ENV}`);
 
 var plugins = [];
 
-var loaders = [
+var rules = [
     {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        use: 'babel-loader'
     },
     {
         test: /\.css$/,
-        loader: 'style!css!postcss'
+        use: ['style-loader', 'css-loader', 'postcss-loader']
     }
 ];
 
 if (production) {
-    loaders = [
+    rules = [
         {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel'
+            use: 'babel-loader'
         },
         {
             test: /\.css$/,
-            loader: ExtractTextWebpackPlugin.extract('style-loader', '!css!postcss')
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: true
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [autoprefixer]
+                        }
+                    }
+                ],
+            })
         }
     ];
   
     plugins = plugins.concat([
-        // This plugin looks for similar chunks and files
-        // and merges them for better caching by the user
-        new webpack.optimize.DedupePlugin(),
-    
-        // This plugins optimizes chunks and modules by
-        // how much they are used in your app
-        new webpack.optimize.OccurrenceOrderPlugin(),
-    
-        new ExtractTextWebpackPlugin('simplebar.css', {
+        new webpack.LoaderOptionsPlugin({
+            debug: !production
+        }),
+
+        new ExtractTextPlugin({
+            filename: 'simplebar.css',
             allChunks: true
         }),
     
@@ -62,21 +75,22 @@ if (production) {
             }
         }),
 
-        new webpack.BannerPlugin(`
+        new webpack.BannerPlugin({
+            banner: `
             ${pkg.title || pkg.name} - v${pkg.version}
             ${pkg.description}
             ${pkg.homepage}
             
             Made by ${pkg.author}
             Under ${pkg.licenses[0].type} License
-        `),
+        `
+        }),
   
     ]);
 
 }
 
 module.exports = {
-    debug: !production,
     devtool: production ? false : 'source-map',
   
     entry: './src/simplebar',
@@ -86,20 +100,15 @@ module.exports = {
     },
   
     output: {
-        path: 'dist',
+        path: path.resolve(__dirname, 'dist'),
         filename: 'simplebar.js',
         libraryTarget: 'umd',
         library: 'SimpleBar'
     },
   
     module: {
-        loaders
+        rules
     },
   
-    plugins,
-  
-    postcss() {
-        return [autoprefixer];
-    }
-
+    plugins
 };

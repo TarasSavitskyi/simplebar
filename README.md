@@ -14,9 +14,10 @@ Then don't forget to import both css and js in your project.
 
 **- Via `<script>` tag**
 ```
-<link rel="stylesheet" href="https://unpkg.com/simplebar@2.4.1/dist/simplebar.css" />
-<script src="https://unpkg.com/simplebar@2.4.1/dist/simplebar.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
 ```
+note: you can replace `@latest` to the latest version (ex `@2.4.3`), if you want to lock to a specific version
 
 ### Usage
 
@@ -61,13 +62,15 @@ new SimpleBar(document.getElementById('myElement'), {
 
 Available options are:
 
-#### wrapContent
+#### wrapContent (deprecated)
 
 By default SimpleBar requires minimal markup. When initialized it will wrap a `simplebar-content`element in a div with the class `simplebar-scroll-content`. If you prefer to include this wrapper element directly in your markup you can switch the default behaviour off by setting the `wrapContent` option to `false`:
 
     new SimpleBar(document.getElementById('myElement'), { wrapContent: false });
 
 Default value is `true`
+
+:warning: this option is deprecated and shouldn't be needed anymore (just prepare your DOM as you want and it should work without having to use this option).
 
 #### autoHide
 
